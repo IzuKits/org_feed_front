@@ -5,7 +5,7 @@
                 <nav class="nav">
                     <a href="/news" class="button" id="news">Новости</a>
                     <a href="/announcements" class="button" id="announ">Обьявления</a>
-                    <a href="#" class="button" id="office">Кабинет</a>
+                    <a href="/profile" class="button" id="profile">Кабинет</a>
                 </nav>
             </div>
         </header>
@@ -42,4 +42,13 @@ a{
 }
 
 
+</style>
+
+<style>
+    main{
+        background-color: white;
+        width: calc(80vw - 4rem);
+        margin: auto;
+        padding: 2rem;
+    }
 </style>

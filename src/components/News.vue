@@ -1,7 +1,7 @@
 <template>
     <div>
-        <HeaderNav />
-        <Articles v-bind:main_title='main_title' v-bind:articles="news"/>
+      <HeaderNav />
+      <Articles v-bind:main_title='main_title' v-bind:articles="news"/>
     </div>
 </template>
 
@@ -52,4 +52,5 @@ export default {
   background-color: rgb(255, 255, 110);
   color: black;
 }
+
 </style>

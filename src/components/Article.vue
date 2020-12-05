@@ -38,4 +38,9 @@ export default {
         margin-bottom: 0;
     }
 
+    li:hover{
+        background-color: rgb(230, 230, 230);
+        transition-duration: 300ms;
+    }
+
 </style>

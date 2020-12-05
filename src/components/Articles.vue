@@ -13,12 +13,7 @@
 </template>
 
 <style scoped>
-    main{
-        background-color: white;
-        width: calc(80vw - 4rem);
-        margin: auto;
-        padding: 2rem;
-    }
+
     h1{
         text-align: left;
     }
