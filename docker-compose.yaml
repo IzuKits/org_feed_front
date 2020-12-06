@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  orgfeed_front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vuejs/ci
+    restart: always
+    network_mode: host
+    ports:
+      - "8080:8080"
+      - "80:80"
+    command: "http-server dist"
