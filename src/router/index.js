@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import News from '@/components/News';
 import Announcement from '@/components/Announcement';
 import Profile from '@/components/Profile';
 import Login from '@/components/Login';
+import News from '../components/News';
+import Cookies from '../components/cookie_tools';
+
 
 Vue.use(Router);
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/news',
@@ -28,7 +29,28 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      meta: {
+        guest: true,
+      },
     },
   ],
   mode: 'history',
 });
+
+router.beforeEach((to, from, next) => {
+  const isAuth = Cookies.getCookie('at') !== undefined;
+  if (to.matched.some(record => record.meta.guest)) {
+    next({
+      query: { redirect: to.fullPath },
+    });
+  }
+  if (!isAuth) {
+    next({ path: '/login',
+      redirect: to.fullPath });
+  } else {
+    next({
+      query: { redirect: to.fullPath },
+    });
+  }
+});
+export default router;

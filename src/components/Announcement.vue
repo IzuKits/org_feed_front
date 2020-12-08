@@ -1,7 +1,8 @@
 <template>
     <div>
         <HeaderNav />
-        <Articles :main_title='main_title' />
+        <Articles :main_title='main_title'
+        v-bind:type="type" />
     </div>
 </template>
 
@@ -13,6 +14,7 @@ export default {
   data() {
     return {
       main_title: 'Объявления',
+      type: 'announcements',
     };
   },
   components: {

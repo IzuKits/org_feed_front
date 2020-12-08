@@ -14,6 +14,7 @@
 
 <script>
 import HTTP from './http-common';
+import Cookies from './cookie_tools';
 
 export default {
   data: () => ({
@@ -28,11 +29,11 @@ export default {
         email: this.email,
         password: this.password,
       }).then((response) => {
-        localStorage.setItem('at', response.data.access_token);
-        HTTP.defaults.headers.post['Authorization'] = response.data.access_token;
-        localStorage.setItem('rt', response.data.refresh_token);
-        localStorage.setItem('id', response.data.user_id);
-        this.$router.push('/profile');
+        Cookies.setCookie('at', response.data.access_token, 2);
+        HTTP.defaults.headers.post.Authorization = response.data.access_token;
+        Cookies.setCookie('rt', response.data.refresh_token, 30);
+        Cookies.setCookie('id', response.data.user_id, 100);
+        document.location.href = '/profile';
       }).catch((error) => {
         if (error.response.status === 400) {
           this.error_msg = 'Неправильное имя пользователя или пароль';
