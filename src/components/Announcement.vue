@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <HeaderNav />
+    <section class="main">
+
         <Articles :main_title='main_title'
         v-bind:type="type" />
-    </div>
+    </section>
 </template>
 
 <script>

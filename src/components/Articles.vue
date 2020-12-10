@@ -1,5 +1,5 @@
 <template>
-    <main>
+      <div>
         <h1>{{ main_title }}</h1>
         <hr>
             <div class="checks">
@@ -16,7 +16,7 @@
                 v-bind:article="article"
             />
         </ul>
-    </main>
+      </div>
 </template>
 
 

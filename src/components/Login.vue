@@ -33,7 +33,7 @@ export default {
         HTTP.defaults.headers.post.Authorization = response.data.access_token;
         Cookies.setCookie('rt', response.data.refresh_token, 30);
         Cookies.setCookie('id', response.data.user_id, 100);
-        document.location.href = '/profile';
+        document.location.href = '/u/profile';
       }).catch((error) => {
         if (error.response.status === 400) {
           this.error_msg = 'Неправильное имя пользователя или пароль';

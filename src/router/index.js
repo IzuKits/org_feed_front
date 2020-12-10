@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Announcement from '@/components/Announcement';
 import Profile from '@/components/Profile';
 import Login from '@/components/Login';
+import MainPage from '@/components/MainPage';
+import NewPost from '@/components/NewPost';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 
@@ -11,19 +13,31 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/news',
-      name: 'news',
-      component: News,
-    },
-    {
-      path: '/announcements',
-      name: 'announcements',
-      component: Announcement,
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile,
+      path: '/u',
+      name: 'u',
+      component: MainPage,
+      children: [
+        {
+          path: 'news',
+          name: 'news',
+          component: News,
+        },
+        {
+          path: 'announcements',
+          name: 'announcements',
+          component: Announcement,
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile,
+        },
+        {
+          path: 'newpost',
+          name: 'newpost',
+          component: NewPost,
+        },
+      ],
     },
     {
       path: '/login',

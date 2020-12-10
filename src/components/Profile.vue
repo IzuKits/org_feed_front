@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <HeaderNav />
-    <main>
+      <section class="main">
       <h2>Профиль пользователя</h2>
       <p>Имя: {{ name }}</p>
       <p>E-mail: {{ email }}</p>
@@ -9,8 +7,7 @@
       <div id="exit_button" v-on:click="exit">
         Выйти из аккаунта
       </div>
-    </main>
-  </div>
+      </section>
 </template>
 
 <script>
@@ -74,5 +71,8 @@ main{
   background-color: white;
   color: black;
   transition-duration: 300ms;
+}
+section.main{
+  text-align: left;
 }
 </style>

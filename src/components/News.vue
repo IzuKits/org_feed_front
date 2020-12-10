@@ -1,14 +1,14 @@
 <template>
-    <div>
-      <HeaderNav />
-      <Articles v-bind:main_title='main_title'
-      v-bind:type="type"/>
-    </div>
+    <section class="main">
+        <Articles v-bind:main_title='main_title'
+        v-bind:type="type"/>
+    </section>
 </template>
 
 <script>
-import HeaderNav from '@/components/HeaderNav';
+import LeftNav from '@/components/LeftNav';
 import Articles from '@/components/Articles';
+
 
 export default {
   data() {
@@ -18,8 +18,8 @@ export default {
     };
   },
   components: {
-    HeaderNav,
     Articles,
+    LeftNav,
   },
 };
 </script>

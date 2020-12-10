@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   components: { },
   name: 'App',
@@ -26,6 +27,49 @@ body{
   background-attachment: fixed;
   min-height: 100vh;
   color:  rgb(59, 59, 59);
+  display: flex;
+  justify-content: center;
 }
+
+</style>
+
+<style scoped>
+.site-header {
+  background-color: rgb(59, 59, 59);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80vw;
+  margin: 3rem auto;
+  color: white;
+}
+
+.site-header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+
+.button{
+    padding: 1rem;
+    display: inline-block;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+
+</style>
+
+<style>
+    section.main{
+        background-color: white;
+        padding: 2rem;
+        flex-grow: 1;
+    }
 
 </style>
