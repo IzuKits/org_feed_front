@@ -7,7 +7,9 @@
                 </router-link></li>
                 <li><router-link to="/u/profile" class="nav-element">Личный кабинет
                 </router-link></li>
+                <li class="serv">Управление</li>
                 <li><router-link to="/u/newpost" class="nav-element">Новый пост</router-link></li>
+                <li><router-link to="/u/myposts" class="nav-element">Мои посты</router-link></li>
             </ul>
         </nav>
     </div>
@@ -15,7 +17,6 @@
 
 <style scoped>
 nav{
-    background-color: blue;
     min-width: 20vw;
     margin-right: 1rem;
 }
@@ -39,6 +40,12 @@ ul{
 }
 div.main{
     align-self: flex-start;
+}
+li.serv{
+    background-color: rgb(255, 255, 137);
+    color: black;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 </style>

@@ -11,10 +11,18 @@ const HTTP = axios.create({
   },
 });
 
+HTTP.interceptors.response.use(response => response,
+  (error) => {
+    // const originalRequest = error.config;
+    // eslint-disable-next-line no-console
+    if (error.message === 'Network Error') {
+      document.location.href = '/login';
+    }
+  },
+);
 /* HTTP.interceptors.response.use(
   res => res,
   (error) => {
-    const originalRequest = error.config;
     // eslint-disable-next-line no-console
     console.log(error);
     if (error.response.status === 401) {

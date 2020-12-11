@@ -24,7 +24,6 @@
 import Article from '@/components/Article';
 import HTTP from './http-common';
 import Cookies from './cookie_tools';
-// import Cookies from './cookie_tools';
 
 
 export default {
