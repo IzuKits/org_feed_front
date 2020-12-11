@@ -5,6 +5,7 @@ import Profile from '@/components/Profile';
 import Login from '@/components/Login';
 import MainPage from '@/components/MainPage';
 import NewPost from '@/components/NewPost';
+import Post from '@/components/Post';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 
@@ -36,6 +37,11 @@ const router = new Router({
           path: 'newpost',
           name: 'newpost',
           component: NewPost,
+        },
+        {
+          path: 'post/:id',
+          name: 'post',
+          component: Post,
         },
       ],
     },

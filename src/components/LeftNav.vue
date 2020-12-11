@@ -2,10 +2,12 @@
     <div id="main">
         <nav>
             <ul>
-                <li><a href="/u/news" class="nav-element">Новости</a></li>
-                <li><a href="/u/announcements" class="nav-element">Объявления</a></li>
-                <li><a href="/u/profile" class="nav-element">Личный кабинет</a></li>
-                <li><a href="/u/newpost" class="nav-element">Новый пост</a></li>
+                <li><router-link to="/u/news" class="nav-element">Новости</router-link></li>
+                <li><router-link to="/u/announcements" class="nav-element">Объявления
+                </router-link></li>
+                <li><router-link to="/u/profile" class="nav-element">Личный кабинет
+                </router-link></li>
+                <li><router-link to="/u/newpost" class="nav-element">Новый пост</router-link></li>
             </ul>
         </nav>
     </div>

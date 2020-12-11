@@ -28,7 +28,8 @@ body{
   min-height: 100vh;
   color:  rgb(59, 59, 59);
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
+  width: 100%;
 }
 
 </style>

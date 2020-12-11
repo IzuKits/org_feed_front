@@ -70,10 +70,14 @@ export default {
         // eslint-disable-next-line quote-props
         'attachments': this.id_files,
       };
-      HTTP.post('/post', data).then((response) => {
-        alert('Пост успешно созздан');
+      HTTP.post('/post', data).then(() => {
+        // eslint-disable-next-line no-alert
+        alert('Пост успешно создан');
+        document.location.href = '/u/news';
+      }).catch(() => {
+        // eslint-disable-next-line no-alert
+        alert('Произошла ошибка, проверьте введенные данные');
       });
-      document.location.href = '/u/news';
     },
     getPostType() {
       let pType = '';
@@ -104,7 +108,7 @@ export default {
         await HTTP.post('/attachment', formData, { header }).then((response) => {
           this.id_files.push(response.data.id);
         // eslint-disable-next-line no-loop-func
-        }).catch((err) => {
+        }).catch(() => {
           // eslint-disable-next-line no-alert
           alert('Произошла ошибка при загрузке файла');
         });

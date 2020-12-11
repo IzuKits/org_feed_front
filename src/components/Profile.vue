@@ -60,11 +60,11 @@ main{
 #exit_button{
   margin: 2rem auto;
   padding: 0.5rem;
-  width: 50%;
-  background-color: rgb(59, 59, 59);
+  background-color: rgb(65, 10, 10);
   color: white;
   box-shadow:  rgb(59, 59, 59) 0px 0px 2px;
   border: none;
+  display: inline-block;
 }
 #exit_button:hover{
   cursor: pointer;

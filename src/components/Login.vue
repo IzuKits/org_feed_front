@@ -96,6 +96,9 @@ export default {
     .invisible{
         display: none !important;
     }
+    body {
+      justify-content: center !important;
+    }
 </style>
 
 <style scoped>
@@ -103,4 +106,5 @@ export default {
         border-bottom: 1px solid rgb(59, 59, 59);
         padding-bottom: 1rem ;
     }
+
 </style>

@@ -1,10 +1,10 @@
 <template>
     <li>
-        <a href="">
+        <router-link :to= "'/u/post/' + article.id">
             <h2>{{ article.title }}</h2>
             <p class="date">Дата публикации: {{ article.pub_date }}</p>
-            <p>Автор: {{ article.author }}</p>
-        </a>
+            <p>Автор: {{ article.author.full_name }}</p>
+        </router-link>
     </li>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   props: {
     article: {},
   },
+  data: () => ({
+
+  }),
 };
 
 </script>
@@ -30,7 +33,7 @@ export default {
         border: 1px solid rgb(59, 59, 59);
         border: none;
     }
-    a{
+    li > *{
         text-decoration: none;
         color: unset;
     }
