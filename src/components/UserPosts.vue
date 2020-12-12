@@ -28,7 +28,7 @@ export default {
     const userid = Cookies.getCookie('id');
     HTTP.get('/post/of_employee?id='.concat(userid)).then((response) => {
       this.articles = response.data;
-    })
+    });
   },
   components: {
     Article,

@@ -4,6 +4,7 @@
       <p>Имя: {{ name }}</p>
       <p>E-mail: {{ email }}</p>
       <p>Статус: {{ role }}</p>
+      <p>Подразделение: {{ subunit.name }}</p>
       <div id="exit_button" v-on:click="exit">
         Выйти из аккаунта
       </div>
@@ -25,6 +26,7 @@ export default {
       name: '',
       email: '',
       role: '',
+      subunit: '',
     };
   },
   created: function func() {
@@ -33,6 +35,7 @@ export default {
       this.name = response.data.full_name;
       this.email = response.data.email;
       this.role = response.data.user_type;
+      this.getSubunit(response.data.subunit);
     });
   },
   methods: {
@@ -41,6 +44,12 @@ export default {
       Cookies.deleteCookie('at');
       Cookies.deleteCookie('rt');
       this.$router.push('login');
+    },
+    getSubunit(id) {
+      HTTP.get('/subunit?id='.concat(id)).then((response) => {
+        this.subunit = response.data;
+        console.log(this.subunit);
+      });
     },
   },
 };

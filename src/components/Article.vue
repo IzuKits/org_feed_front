@@ -1,8 +1,8 @@
 <template>
     <li>
-        <router-link :to= "'/u/post/' + article.id">
+        <router-link :to= "'/' + this.user + '/post/' + article.id">
             <h2>{{ article.title }}</h2>
-            <p class="date">Дата публикации: {{ article.pub_date }}</p>
+            <p class="date">Дата публикации: {{ article.published_on }}</p>
             <p>Автор: {{ article.author.full_name }}</p>
         </router-link>
     </li>
@@ -12,10 +12,16 @@
 export default {
   props: {
     article: {},
+    role: '',
   },
   data: () => ({
-
+    user: 'u',
   }),
+  created: function func() {
+    if (this.role !== undefined) {
+      this.user = this.role;
+    }
+  },
 };
 
 </script>

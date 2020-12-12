@@ -7,13 +7,43 @@ import MainPage from '@/components/MainPage';
 import NewPost from '@/components/NewPost';
 import Post from '@/components/Post';
 import UserPosts from '@/components/UserPosts';
+import AdminPanel from '@/components/AdminPanel/AdminPanel';
+import NoAccess from '@/components/AdminPanel/NoAccess';
+import Consideration from '@/components/AdminPanel/Consideration';
+import AdminPost from '@/components/AdminPanel/AdminPost';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
+import HTTP from '../components/http-common';
 
 
 Vue.use(Router);
 const router = new Router({
   routes: [
+    {
+      path: '/noaccess',
+      name: 'NoAccess',
+      component: NoAccess,
+    },
+    {
+      path: '/admin',
+      name: 'AdminPanel',
+      component: AdminPanel,
+      meta: {
+        admin: true,
+      },
+      children: [
+        {
+          path: 'consideration',
+          name: 'consideration',
+          component: Consideration,
+        },
+        {
+          path: 'post/:id',
+          name: 'post',
+          component: AdminPost,
+        },
+      ],
+    },
     {
       path: '/u',
       name: 'u',
@@ -63,11 +93,31 @@ const router = new Router({
   mode: 'history',
 });
 
+function getUserRole(callback) {
+  HTTP.get('/employee/id').then((response) => {
+    const id = response.data.id;
+    // eslint-disable-next-line no-shadow
+    HTTP.get('/employee?id='.concat(id)).then((response) => {
+      // eslint-disable-next-line no-unused-expressions
+      callback(response.data.user_type);
+    }).catch(() => { 'error'; });
+  }).catch(() => { 'error'; });
+}
+
 router.beforeEach((to, from, next) => {
   const isAuth = Cookies.getCookie('at') !== undefined;
   if (to.matched.some(record => record.meta.guest)) {
     next({
       query: { redirect: to.fullPath },
+    });
+  } else if (to.matched.some(record => record.meta.admin)) {
+    getUserRole((result) => {
+      if (result === 'moderator' || result === 'admin') {
+        next({ query: { redirect: to.fullPath } });
+      } else {
+        next({ path: '/noaccess',
+          redirect: to.fullPath });
+      }
     });
   }
   if (!isAuth) {
@@ -79,4 +129,6 @@ router.beforeEach((to, from, next) => {
     });
   }
 });
+
+
 export default router;

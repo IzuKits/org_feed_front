@@ -4,52 +4,74 @@
         <hr>
         <div>
             <h1>{{ post.title }}</h1>
+            <p class="mini">Дата создания: {{ post.created_on }}</p>
             <p class="mini">Дата публикации: {{ post.published_on }}</p>
+            <p class="mini">Автор: {{ post.author.full_name }}</p>
+            <p class="mini">Утвердил: {{ post.approved_by.full_name }}</p>
+            <p class="mini">Тип: {{ post.post_type }}</p>
+            <p class="mini" v-if="subunit !== ''">
+                Подразделение: {{ subunit }}
+            </p>
             <p class="mini">Статус: {{ post.status }}</p>
             <p class="mini">Размер: {{ post.size }}</p>
-            <p class="mini">Автор: {{ post.author.full_name }}</p>
-            <p class="post_body">{{ post.body }}</p>
-            <template v-if="role === 'admin' || role === 'moderator'">
-            <p class="mini">Дата создания: {{ post.created_on }}</p>
-            <p class="mini">Утвердил: {{ post.approved_by.fired }}</p>
 
-            </template>
+            <p class="mini">Текст:</p>
+            <p class="post_body">{{ post.body }}</p>
             <template v-if="post.attachments.length !== 0">
                 <h4>Прикрепленные файлы</h4>
                 <File v-for="file in post.attachments"
                 v-bind:key="file.id"
                 v-bind:file="file"/>
             </template>
+            <EditPostPanel
+                v-bind:role="role"
+                v-bind:id="post.id"
+            />
         </div>
     </section>
 </template>
 
 <script>
-import HTML from './http-common';
-import File from './File';
+import HTTP from '../http-common';
+import File from '../File';
+import EditPostPanel from './EditPostPanel';
+import { getRole } from '../../main';
 
 export default {
   data: () => ({
     postId: '',
     post: '',
     role: '',
+    subunit: '',
   }),
   created: function func() {
     this.postId = this.$route.params.id;
     this.getPost();
+    getRole((r) => {
+      this.role = r;
+    });
+    if (this.post.post_type === 'subunit_news' || this.post.post_type === 'subunit_announcement') {
+      this.getSubunit();
+    }
   },
   methods: {
     getPost() {
-      HTML.get('/post?id='.concat(this.postId)).then((response) => {
+      HTTP.get('/post?id='.concat(this.postId)).then((response) => {
         this.post = response.data;
       }).catch(() => {
         // eslint-disable-next-line no-alert
         alert('Произошла ошибка');
       });
     },
+    getSubunit() {
+      const subId = this.post.author.subunit;
+      HTTP.get('/subunit?id='.concat(subId)).then((response) => {
+        this.subunit = response.data;
+      });
+    },
   },
   components: {
-    File,
+    File, EditPostPanel,
   },
 };
 </script>
@@ -72,7 +94,7 @@ section.main{
     text-align: left;
 }
 p.mini {
-    font-size: 0.85rem;
+    font-size: 1rem;
     margin: 0.2rem 0;
 }
 h4{

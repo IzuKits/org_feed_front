@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-      <router-view/>
+      <router-view />
     </div>
 </template>
 
@@ -9,6 +9,9 @@
 export default {
   components: { },
   name: 'App',
+  data: () => ({
+    employee: '',
+  }),
 };
 </script>
 

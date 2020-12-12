@@ -1,29 +1,34 @@
 <template>
-    <div>
+<div>
     <header class="site-header">
-        <p>Company name</p>
+        <h3>Панель администратора</h3>
     </header>
     <main>
         <LeftNav />
-        <router-view />
+        <section class="main">
+          <router-view />
+        </section>
     </main>
-    </div>
+</div>
 </template>
 
 <script>
-import LeftNav from '@/components/LeftNav';
-
+import { eventBus } from '../../main';
+import LeftNav from './LeftNav';
 
 export default {
-  data() {
-    return {
-      role: 'def',
-    };
+  data: () => ({
+    employee: {},
+  }),
+  created() {
+    eventBus.$on('employee', (data) => {
+      // eslint-disable-next-line no-console
+      this.employee = data;
+    });
   },
   components: {
     LeftNav,
   },
-
 };
 </script>
 
@@ -47,3 +52,4 @@ main > div:nth-child(2){
     margin-bottom: 1rem;
 }
 </style>
+

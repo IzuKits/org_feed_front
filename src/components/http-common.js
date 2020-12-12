@@ -16,7 +16,8 @@ HTTP.interceptors.response.use(response => response,
     // const originalRequest = error.config;
     // eslint-disable-next-line no-console
     if (error.message === 'Network Error') {
-      document.location.href = '/login';
+      // eslint-disable-next-line no-alert
+      alert('500');
     }
   },
 );
