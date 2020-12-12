@@ -17,6 +17,14 @@ export function getRole(callback) {
     });
   });
 }
+export function getEmployee(callback) {
+  HTTP.get('/employee/id').then((response) => {
+    // eslint-disable-next-line no-shadow
+    HTTP.get('/employee?id='.concat(response.data.id)).then((response) => {
+      callback(response.data);
+    });
+  });
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

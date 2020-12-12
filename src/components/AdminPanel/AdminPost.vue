@@ -26,6 +26,9 @@
             <EditPostPanel
                 v-bind:role="role"
                 v-bind:id="post.id"
+                v-bind:status="post.status"
+                v-bind:userid="userid"
+                v-bind:author="post.author"
             />
         </div>
     </section>
@@ -35,20 +38,22 @@
 import HTTP from '../http-common';
 import File from '../File';
 import EditPostPanel from './EditPostPanel';
-import { getRole } from '../../main';
+import { getEmployee } from '../../main';
 
 export default {
   data: () => ({
     postId: '',
     post: '',
     role: '',
+    userid: '',
     subunit: '',
   }),
   created: function func() {
     this.postId = this.$route.params.id;
     this.getPost();
-    getRole((r) => {
-      this.role = r;
+    getEmployee((r) => {
+      this.role = r.user_type;
+      this.userid = r.id;
     });
     if (this.post.post_type === 'subunit_news' || this.post.post_type === 'subunit_announcement') {
       this.getSubunit();

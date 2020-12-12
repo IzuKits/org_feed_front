@@ -18,6 +18,7 @@ HTTP.interceptors.response.use(response => response,
     if (error.message === 'Network Error') {
       // eslint-disable-next-line no-alert
       alert('500');
+      console.log(error);
     }
   },
 );

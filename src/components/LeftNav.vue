@@ -11,7 +11,7 @@
                 <li><router-link to="/u/newpost" class="nav-element">Новый пост</router-link></li>
                 <li><router-link to="/u/myposts" class="nav-element">Мои посты</router-link></li>
                 <li v-if="role === 'admin' || role === 'moderator'" class="adm">
-                    <router-link to="/admin" class="nav-element adm">
+                    <router-link to="/admin/consideration" class="nav-element adm">
                         Перейти в админ панель
                     </router-link>
                 </li>

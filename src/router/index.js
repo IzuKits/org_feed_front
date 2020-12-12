@@ -11,6 +11,9 @@ import AdminPanel from '@/components/AdminPanel/AdminPanel';
 import NoAccess from '@/components/AdminPanel/NoAccess';
 import Consideration from '@/components/AdminPanel/Consideration';
 import AdminPost from '@/components/AdminPanel/AdminPost';
+import Subunits from '@/components/AdminPanel/Subunits';
+import EditPost from '@/components/AdminPanel/EditPost';
+import PostsBySubunit from '@/components/AdminPanel/PostsBySubunit';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 import HTTP from '../components/http-common';
@@ -39,8 +42,23 @@ const router = new Router({
         },
         {
           path: 'post/:id',
-          name: 'post',
+          name: 'adminpost',
           component: AdminPost,
+        },
+        {
+          path: 'subunits',
+          name: 'subunits',
+          component: Subunits,
+        },
+        {
+          path: 'subunit/posts/:id',
+          name: 'sumunitposts',
+          component: PostsBySubunit,
+        },
+        {
+          path: 'post/:id/edit',
+          name: 'editpost',
+          component: EditPost,
         },
       ],
     },

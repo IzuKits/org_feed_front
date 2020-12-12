@@ -1,9 +1,29 @@
 <template>
     <div class="wrapper">
-        <div class="button" v-on:click="ApprovePost">Подтвердить</div>
-        <div class="button" v-on:click="DisapprovePost">Отклонить</div>
+        <div class="button" v-on:click="ApprovePost"
+            v-if="status === 'under_consideration' || status === 'rejected'">
+            Подтвердить
+        </div>
+        <div class="button" v-on:click="DisapprovePost" v-if="status === 'under_consideration'">
+            Отклонить
+        </div>
+        <div class="button" v-on:click="DisapproveApprovePost" v-if="status === 'posted'">
+            Отклонить
+        </div>
         <div class="button" v-on:click="DeletePost">Удалить</div>
-        <div v-if="role === 'admin'" class="button">Изменить</div>
+        <div class="button" v-on:click="ArchivePost" v-if="status !== 'archived'">
+            Архивировать
+        </div>
+        <div class="button" v-on:click="UnarchivePost" v-if="status === 'archived'">
+            Разархивировать
+        </div>
+        <router-link tag="div" v-bind:to="'/admin/post/'.concat(this.id).concat('/edit')"
+        v-if="role === 'admin' ||
+            (role === 'moderator' && userid === author.id)"
+         class="button">
+        Изменить
+        </router-link>
+
     </div>
 </template>
 
@@ -17,6 +37,9 @@ export default {
   props: {
     role: '',
     id: '',
+    status: '',
+    userid: '',
+    author: '',
   },
   methods: {
     ApprovePost() {
@@ -28,17 +51,36 @@ export default {
     },
     DeletePost() {
       if (confirm('Вы уверены что хотите удалить этот пост?')) {
-        HTTP.delete('/post?id='.concat(this.id)).then((response) => {
-          console.log(response);
-          // document.location = '/admin/consideration';
+        HTTP.delete('/post?id='.concat(this.id)).then(() => {
+          document.location = '/admin/consideration';
         });
       }
     },
     DisapprovePost() {
       if (confirm('Вы уверены что хотите отправить этот пост на доработку?')) {
-        HTTP.delete('/post/approve?id='.concat(this.id)).then((response) => {
-          console.log(response);
-          // document.location.reload();
+        HTTP.post('/post/reject?id='.concat(this.id)).then(() => {
+          document.location.reload();
+        });
+      }
+    },
+    ArchivePost() {
+      if (confirm('Вы уверены что хотите отправить этот пост в архив?')) {
+        HTTP.post('/post/archive?id='.concat(this.id)).then(() => {
+          document.location.reload();
+        });
+      }
+    },
+    DisapproveApprovePost() {
+      if (confirm('Вы уверены что хотите отклонить этот ранее принятый пост?')) {
+        HTTP.delete('/post/approve?id='.concat(this.id)).then(() => {
+          document.location.reload();
+        });
+      }
+    },
+    UnarchivePost() {
+      if (confirm('Вы уверены что хотите разархивировать этот пост?')) {
+        HTTP.delete('/post/archive?status=posted&id='.concat(this.id)).then(() => {
+          document.location.reload();
         });
       }
     },
@@ -48,15 +90,15 @@ export default {
 
 <style  scoped>
 .wrapper {
+    margin: 2rem auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 .button{
     padding: 0.5rem;
     border-radius: 6px;
     background-color: rgb(59, 59, 59);
     color: white;
-    margin: 0 2rem;
 }
 
 .button:hover{

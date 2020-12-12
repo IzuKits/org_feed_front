@@ -5,6 +5,7 @@
             <p>Автор: {{ file.author.full_name }}</p>
             <p>Размер: {{ file.size }}</p>
             <a v-on:click="downloadFile">Скачать файл</a>
+            <a v-if="edit" v-on:click="deleteFile">Удалить файл</a>
         </div>
     </div>
 </template>
@@ -12,9 +13,11 @@
 <script>
 import JQuery from 'jquery';
 import HTTP from './http-common';
+import { eventBus } from '../main';
 
 export default {
   props: {
+    edit: true,
     file: '',
   },
   methods: {
@@ -34,6 +37,11 @@ export default {
         document.body.appendChild(link);
         link.click();
       });
+    },
+    deleteFile() {
+      if (confirm('Удалить файл?')) {
+        eventBus.$emit('files_for_delete', this.file.id);
+      }
     },
   },
 };

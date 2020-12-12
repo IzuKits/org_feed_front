@@ -25,7 +25,7 @@ export default {
 }
 body{
   margin: 0;
-  background-image: url('/static/imgs/backgroung.jpg');
+  background-image: url('/static/imgs/backgroung.png');
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
