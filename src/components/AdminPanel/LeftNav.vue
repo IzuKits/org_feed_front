@@ -9,7 +9,6 @@
                 </router-link></li>
                 <li><router-link to="/admin/subunits" class="nav-element">Подразделения
                 </router-link></li>
-
                 <li class="nav-title">Управление</li>
             </ul>
         </nav>

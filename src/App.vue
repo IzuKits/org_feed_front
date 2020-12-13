@@ -34,7 +34,21 @@ body{
   justify-content: stretch;
   width: 100%;
 }
-
+button.edit{
+    background-color: rgb(59, 59, 59);
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    font-size: 1.1rem;
+    display: inline-block;
+    margin-top: 2rem;
+}
+button.edit:hover{
+    background-color: rgb(243, 243, 79);
+    color: black;
+    transition-duration: 300ms;
+    cursor: pointer;
+}
 </style>
 
 <style scoped>

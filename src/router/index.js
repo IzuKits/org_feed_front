@@ -14,6 +14,9 @@ import AdminPost from '@/components/AdminPanel/AdminPost';
 import Subunits from '@/components/AdminPanel/Subunits';
 import EditPost from '@/components/AdminPanel/EditPost';
 import PostsBySubunit from '@/components/AdminPanel/PostsBySubunit';
+import UsersBySubunit from '@/components/AdminPanel/UsersBySubunit';
+import UserProfile from '@/components/AdminPanel/UserProfile';
+import EditUser from '@/components/AdminPanel/EditUser';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 import HTTP from '../components/http-common';
@@ -59,6 +62,21 @@ const router = new Router({
           path: 'post/:id/edit',
           name: 'editpost',
           component: EditPost,
+        },
+        {
+          path: 'subunit/:id/users',
+          name: 'users',
+          component: UsersBySubunit,
+        },
+        {
+          path: 'userprofile/:id',
+          name: 'userprofile',
+          component: UserProfile,
+        },
+        {
+          path: 'userprofile/:id/edit',
+          name: 'edituser',
+          component: EditUser,
         },
       ],
     },

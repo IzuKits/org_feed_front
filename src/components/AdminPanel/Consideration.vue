@@ -18,7 +18,7 @@ import HTTP from '../http-common';
 export default {
   data() {
     return {
-      main_title: 'Посты, ожидающие подтверждения',
+      main_title: 'Ожидающие подтверждения посты',
       type: 'news',
       page: 1,
       articles: {},

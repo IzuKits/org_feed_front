@@ -20,7 +20,7 @@
                  id="" checked> Новость
                 </label>
                 <label>
-                    <input v-model="type2" type="radio" name="post_type2" value="announcements"
+                    <input v-model="type2" type="radio" name="post_type2" value="announcement"
                      id="" >
                     Объявление
                 </label>
@@ -40,8 +40,8 @@
             <label for="file" style="margin-top: 2rem">Прикрепить файлы</label>
             <input  type="file" name="smth" id="file" multiple ref="new_files"
             v-on:change="handleFilesUpload()">
-            <button v-on:click = "saveChanges">Сохранить изменения</button>
-            <button v-on:click = "Cancel">Отменить</button>
+            <button v-on:click = "saveChanges" class="edit">Сохранить изменения</button>
+            <button v-on:click = "Cancel" class="edit">Отменить</button>
         </form>
     </section>
 </template>
@@ -75,6 +75,7 @@ export default {
         const data = response.data;
         let type = data.post_type;
         type = type.split('_');
+        console.log(type);
         this.type1 = type[0];
         this.type2 = type[1];
         this.title = data.title;
@@ -108,7 +109,8 @@ export default {
         HTTP.put('/post?id='.concat(this.id), data).then(() => {
         // eslint-disable-next-line no-alert
           alert('Пост успешно изменен');
-          document.location.reload();
+          window.history.back();
+          // this.$router.push('/admin/subunits');
         }).catch(() => {
         // eslint-disable-next-line no-alert
           alert('Произошла ошибка, проверьте введенные данные');
@@ -116,7 +118,7 @@ export default {
       }
     },
     Cancel() {
-      alert('cancel');
+      this.$router.go(-1);
     },
     saveFilesForDelete(id) {
       let index = -1;
@@ -176,6 +178,9 @@ export default {
 form > *{
     display:block;
 }
+form > button{
+  display: inline-block;
+}
 form > fieldset > *{
     display:block;
     text-align: left;
@@ -190,21 +195,7 @@ input[type="text"],
 input[type="file"]{
     margin: 1rem 0;
 }
-button{
-    background-color: rgb(59, 59, 59);
-    color: white;
-    padding: 0.5rem;
-    border: none;
-    font-size: 1.1rem;
-    display: inline-block;
-    margin-top: 2rem;
-}
-button:hover{
-    background-color: rgb(243, 243, 79);
-    color: black;
-    transition-duration: 300ms;
-    cursor: pointer;
-}
+
 </style>
 <style>
 main {
