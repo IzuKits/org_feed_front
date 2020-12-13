@@ -1,12 +1,12 @@
 <template>
 <section>
-    <h1>Изменить данные о пользователе</h1>
+    <h1>{{title}}</h1>
     <form action="" ref="form">
         <label for="name">Полное имя</label>
         <input type="text" name="" id="name" v-model="name" required>
         <label for="email">E-mail</label>
         <input type="email" name="" id="email" v-model="email" required>
-        <label for="">
+        <label for="" v-if="!newUser">
             <input type="checkbox" name="" id="" v-model="fired">
             Уволен
         </label>
@@ -29,7 +29,14 @@
                 {{subunit.text}}
             </option>
         </select>
-        <button class="edit" v-on:click="Save">Сохранить изменения</button>
+        <template v-if="newUser">
+            <label for="pass">Пароль</label>
+            <input type="password" name="pass" id="pass" v-model="password" required minlength="8">
+        </template>
+        <button class="edit" v-on:click="Save" v-if="!newUser">
+            Сохранить изменения</button>
+        <button class="edit" v-on:click="Register" v-else>
+            Зарегестрировать</button>
         <router-link tag="button"
         class="edit"
         v-bind:to="'/admin/userprofile/'.concat(this.user.id)">
@@ -44,6 +51,14 @@ import HTTP from '../http-common';
 import { getRole } from '../../main';
 
 export default {
+  props: {
+    title: {
+      default: 'Изменить данные о пользователе',
+    },
+    newUser: {
+      default: false,
+    },
+  },
   data: () => ({
     role: '',
     user: '',
@@ -58,9 +73,12 @@ export default {
     ],
     subunit: '',
     subunit_options: [],
+    password: '',
   }),
   created: async function func() {
-    await this.setDefaultData();
+    if (!this.newUser) {
+      await this.setDefaultData();
+    }
     this.getSubunitOptions();
     getRole((role) => {
       this.role = role;
@@ -99,12 +117,13 @@ export default {
       if (!myform.checkValidity()) {
         if (myform.reportValidity) {
           myform.reportValidity();
+          return;
         }
       }
       // eslint-disable-next-line no-alert
       if (confirm('Сохранить измнения?')) {
         const data = {
-          full_name: this.full_name,
+          full_name: this.name,
           email: this.email,
           fired: this.fired,
           subunit: this.subunit,
@@ -113,6 +132,31 @@ export default {
         HTTP.put('/employee?id='.concat(this.user.id), data).then(() => {
           alert('Изменения сохранены');
           document.location.href = '/admin/userprofile/'.concat(this.user.id);
+        }).catch(() => {
+          alert('Произошла ошибка, проверьте введенные данные');
+        });
+      }
+    },
+    Register(e) {
+      e.preventDefault();
+      const myform = this.$refs.form;
+      if (!myform.checkValidity()) {
+        if (myform.reportValidity) {
+          myform.reportValidity();
+          return;
+        }
+      }
+      if (confirm('Зарегестрировать пользователя?')) {
+        const data = {
+          full_name: this.name,
+          email: this.email,
+          subunit: this.subunit,
+          user_type: this.user_type,
+          password: this.password,
+        };
+        HTTP.post('/employee', data).then((response) => {
+          alert('Пользователь зарегестрирован');
+          document.location.href = '/admin/userprofile/'.concat(response.data.id);
         }).catch(() => {
           alert('Произошла ошибка, проверьте введенные данные');
         });

@@ -17,6 +17,7 @@ import PostsBySubunit from '@/components/AdminPanel/PostsBySubunit';
 import UsersBySubunit from '@/components/AdminPanel/UsersBySubunit';
 import UserProfile from '@/components/AdminPanel/UserProfile';
 import EditUser from '@/components/AdminPanel/EditUser';
+import AddUser from '@/components/AdminPanel/AddUser';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 import HTTP from '../components/http-common';
@@ -77,6 +78,11 @@ const router = new Router({
           path: 'userprofile/:id/edit',
           name: 'edituser',
           component: EditUser,
+        },
+        {
+          path: 'adduser',
+          name: 'adduser',
+          component: AddUser,
         },
       ],
     },

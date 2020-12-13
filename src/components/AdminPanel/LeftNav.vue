@@ -9,7 +9,11 @@
                 </router-link></li>
                 <li><router-link to="/admin/subunits" class="nav-element">Подразделения
                 </router-link></li>
-                <li class="nav-title">Управление</li>
+                <template v-if="role === 'admin'">
+                    <li class="nav-title">Добавление</li>
+                    <li><router-link to="/admin/adduser" class="nav-element">Добавить пользователя
+                    </router-link></li>
+                </template>
             </ul>
         </nav>
     </div>

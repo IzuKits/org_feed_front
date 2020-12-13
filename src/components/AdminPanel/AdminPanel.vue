@@ -4,7 +4,7 @@
         <h3>Панель администратора</h3>
     </header>
     <main>
-        <LeftNav />
+        <LeftNav v-bind:role="employee.user_type" />
         <section class="main">
           <router-view />
         </section>
@@ -13,17 +13,16 @@
 </template>
 
 <script>
-import { eventBus } from '../../main';
 import LeftNav from './LeftNav';
+import { getEmployee } from '../../main';
 
 export default {
   data: () => ({
     employee: {},
   }),
   created() {
-    eventBus.$on('employee', (data) => {
-      // eslint-disable-next-line no-console
-      this.employee = data;
+    getEmployee((user) => {
+      this.employee = user;
     });
   },
   components: {

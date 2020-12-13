@@ -24,6 +24,7 @@ import HTTP from '../http-common';
 export default {
   props: {
     subunit: {},
+    role: '',
   },
   data: () => ({
     leader: '',

@@ -49,6 +49,23 @@ button.edit:hover{
     transition-duration: 300ms;
     cursor: pointer;
 }
+.radio_wrapper{
+  border-bottom: 1px solid black;
+  text-align: left;
+}
+.radio_button{
+  padding: 1rem;
+  display: inline-block;
+}
+.radio_button:hover{
+    background-color: rgb(177, 177, 177);
+    transition-duration: 200ms;
+    cursor: pointer;
+}
+.active_radio_button{
+    background-color: rgb(59, 59, 59);
+    color: white;
+}
 </style>
 
 <style scoped>
