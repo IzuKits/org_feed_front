@@ -60,6 +60,7 @@ export default {
       });
     },
     changeArchive() {
+      this.page = 1;
       if (this.isarchived === 'true') {
         this.getArchivedData();
       } else {
