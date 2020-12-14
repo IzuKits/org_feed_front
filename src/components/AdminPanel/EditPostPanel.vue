@@ -57,7 +57,7 @@ export default {
       }
     },
     DisapprovePost() {
-      if (confirm('Вы уверены что хотите отправить этот пост на доработку?')) {
+      if (confirm('Вы уверены что хотите отклонить пост?')) {
         HTTP.post('/post/reject?id='.concat(this.id)).then(() => {
           document.location.reload();
         });

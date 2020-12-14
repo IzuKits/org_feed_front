@@ -1,6 +1,6 @@
 <template>
     <section class="main">
-        <h2>Создание новости</h2>
+        <h2>Создание поста</h2>
         <form method="POST" ref="form">
             <fieldset>
                 <legend>Пост для организации или для подразделения?</legend>
@@ -33,13 +33,17 @@
             <label for="file">Прикрепить файлы</label>
             <input  type="file" name="smth" id="file" multiple ref="files"
             v-on:change="handleFilesUpload()">
-            <button v-on:click = "formSubmit">Отправить на подтверждение</button>
+            <button v-on:click = "formSubmit" v-if="role === 'user'">
+              Отправить на подтверждение</button>
+            <button v-on:click = "formSubmit" v-else>
+              Опубликовать</button>
         </form>
     </section>
 </template>
 
 <script>
 import HTTP from './http-common';
+import { getRole } from '../main';
 
 export default {
   data: () => ({
@@ -49,7 +53,13 @@ export default {
     body: '',
     files: '',
     id_files: [],
+    role: '',
   }),
+  created: function func() {
+    getRole((r) => {
+      this.role = r;
+    });
+  },
   methods: {
     async formSubmit(e) {
       e.preventDefault();
