@@ -18,6 +18,8 @@ import UsersBySubunit from '@/components/AdminPanel/UsersBySubunit';
 import UserProfile from '@/components/AdminPanel/UserProfile';
 import EditUser from '@/components/AdminPanel/EditUser';
 import AddUser from '@/components/AdminPanel/AddUser';
+import AllPosts from '@/components/AdminPanel/AllPosts';
+import Statistic from '@/components/AdminPanel/Statistic';
 import News from '../components/News';
 import Cookies from '../components/cookie_tools';
 import HTTP from '../components/http-common';
@@ -83,6 +85,16 @@ const router = new Router({
           path: 'adduser',
           name: 'adduser',
           component: AddUser,
+        },
+        {
+          path: 'posts',
+          name: 'allposts',
+          component: AllPosts,
+        },
+        {
+          path: 'statistic',
+          name: 'statistic',
+          component: Statistic,
         },
       ],
     },

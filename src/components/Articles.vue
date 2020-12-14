@@ -1,13 +1,15 @@
 <template>
       <div>
         <h1>{{ main_title }}</h1>
-        <hr>
-            <div class="checks">
-            <label>
-                <input type="checkbox" class="option-input checkbox"
-                v-model="only_subunit" v-on:change="select_articles" />
-                    Только по подразделению
-                </label>
+            <div class="radio_wrapper">
+              <label for="fired"><div v-bind:class="organiztionButton" >
+                Организация</div></label>
+              <label for="notfired"><div v-bind:class="subunitButton" >
+                Подразделение</div></label>
+              <input type="radio" name="f" id="notfired" v-model="select" value="subunit"
+              v-on:change="select_articles">
+              <input type="radio" name="f" id="fired" v-model="select" value="organization"
+              v-on:change="select_articles">
             </div>
         <ul>
             <Article
@@ -16,6 +18,7 @@
                 v-bind:article="article"
             />
         </ul>
+            <Paginator v-bind:page="page_num" v-bind:max_page="max_page" v-if="!biggest_status"/>
       </div>
 </template>
 
@@ -24,6 +27,8 @@
 import Article from '@/components/Article';
 import HTTP from './http-common';
 import Cookies from './cookie_tools';
+import Paginator from './Panels/Paginator';
+import { eventBus } from '../main';
 
 
 export default {
@@ -37,31 +42,57 @@ export default {
       only_subunit: false,
       page_num: 1,
       subunit_id: '',
+      max_page: '',
+      select: 'organization',
     };
   },
   components: {
-    Article,
+    Article, Paginator,
   },
   created: function func() {
     const userid = Cookies.getCookie('id');
     HTTP.get('/employee?id='.concat(userid)).then((response) => {
       this.subunit_id = response.data.subunit;
+    }).then(() => {
+      this.select_articles();
     });
-    HTTP.get('/feed/'.concat(this.type).concat('/organization?page=').concat(this.page_num)).then((response) => {
+    /* HTTP.get('/feed/'.concat(this.type).concat('/'.concat'?page=')
+        .concat(this.page_num)).then((response) => {
       this.articles = response.data.posts;
+      this.max_page = response.data.pages_count;
+    }); */
+    eventBus.$on('page', (p) => {
+      this.page_num = p;
+      this.select_articles();
     });
   },
   methods: {
     select_articles: function func() {
-      let path = '/feed/'.concat(this.type).concat('/');
-      if (this.only_subunit) {
-        path += 'subunit?id='.concat(this.subunit_id).concat('&page=');
+      let path = '/feed/'.concat(this.type).concat('/')
+        .concat(this.select);
+      if (this.select === 'subunit') {
+        path += '?id='.concat(this.subunit_id).concat('&page=');
       } else {
-        path += 'organization?page=';
+        path += '?page=';
       }
       HTTP.get(path.concat(this.page_num)).then((response) => {
         this.articles = response.data.posts;
+        this.max_page = response.data.pages_count;
       });
+    },
+  },
+  computed: {
+    organiztionButton: function func() {
+      return {
+        radio_button: true,
+        active_radio_button: this.select === 'organization',
+      };
+    },
+    subunitButton: function func() {
+      return {
+        radio_button: true,
+        active_radio_button: this.select === 'subunit',
+      };
     },
   },
 };
@@ -78,88 +109,6 @@ export default {
         padding: 0;
     }
 
-    *{font-family: 'Roboto', sans-serif;}
-
-.checks{
-    text-align: left;
-}
-.checks > label{
-    font-size: 1.1rem;
-}
-
-@keyframes click-wave {
-  0% {
-    height: 40px;
-    width: 40px;
-    opacity: 0.5;
-    position: relative;
-  }
-  100% {
-    height: 200px;
-    width: 200px;
-    margin-left: -80px;
-    margin-top: -80px;
-    opacity: 0;
-  }
-}
-
-.option-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  position: relative;
-  top: 13.33333px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 40px;
-  width: 40px;
-  transition: all 0.15s ease-out 0s;
-  background: #cbd1d8;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  margin-right: 0.5rem;
-  outline: none;
-  position: relative;
-  z-index: 1000;
-}
-.option-input:hover {
-  background: #9faab7;
-}
-.option-input:checked {
-  background: rgb(59, 59, 59);
-}
-.option-input:checked::before {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  content: '✔';
-  display: inline-block;
-  font-size: 26.66667px;
-  text-align: center;
-  line-height: 40px;
-}
-.option-input:checked::after {
-  -webkit-animation: click-wave 0.65s;
-  -moz-animation: click-wave 0.65s;
-  animation: click-wave 0.65s;
-  background: #fcff63;
-  content: '';
-  display: block;
-  position: relative;
-  z-index: 100;
-}
-.option-input.radio {
-  border-radius: 50%;
-}
-.option-input.radio::after {
-  border-radius: 50%;
-}
-
 body {
   display: -webkit-box;
   display: -moz-box;
@@ -170,6 +119,8 @@ body {
   font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
   text-align: center;
 }
-
+input[type='radio']{
+  display: none;
+}
 
 </style>
