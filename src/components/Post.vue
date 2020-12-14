@@ -5,6 +5,7 @@
         <div>
             <h1>{{ post.title }}</h1>
             <p class="mini">Дата публикации: {{ post.published_on }}</p>
+            <p class="mini">Дата архивации: {{ post.archived_on }}</p>
             <p class="mini">Статус: {{ post.status }}</p>
             <p class="mini">Размер: {{ post.size }}</p>
             <p class="mini">Автор: {{ post.author.full_name }}</p>
