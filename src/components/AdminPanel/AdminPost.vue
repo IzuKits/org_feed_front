@@ -6,6 +6,7 @@
             <h1>{{ post.title }}</h1>
             <p class="mini">Дата создания: {{ post.created_on }}</p>
             <p class="mini">Дата публикации: {{ post.published_on }}</p>
+            <p class="mini">Дата архивации: {{ post.archived_on }}</p>
             <p class="mini">Автор: {{ post.author.full_name }}</p>
             <p class="mini">Утвердил: {{ post.approved_by.full_name }}</p>
             <p class="mini">Тип: {{ post.post_type }}</p>
