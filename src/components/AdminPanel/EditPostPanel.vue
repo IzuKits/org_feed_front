@@ -14,9 +14,6 @@
         <div class="button" v-on:click="ArchivePost" v-if="status !== 'archived'">
             Архивировать
         </div>
-        <div class="button" v-on:click="UnarchivePost" v-if="status === 'archived'">
-            Разархивировать
-        </div>
         <router-link tag="div" v-bind:to="'/admin/post/'.concat(this.id).concat('/edit')"
         v-if="role === 'admin' ||
             (role === 'moderator' && userid === author.id)"
