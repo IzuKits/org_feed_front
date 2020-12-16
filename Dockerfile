@@ -7,8 +7,8 @@ WORKDIR /app
 COPY . /app
 
 # install project dependencies
-RUN npm install npm@7
-RUN npm install
+RUN npm install npm@7 || true
+RUN npm install || true
 
 # build app for production with minification
 #RUN npm run build

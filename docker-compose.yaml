@@ -5,10 +5,27 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: vuejs/ci
+    image: orgfeed_front
     restart: always
     network_mode: host
     ports:
       - "8080:8080"
       - "80:80"
     command: "npm run dev"
+
+  orgfeed_api:
+    build:
+      context: ../orgfeed/
+      dockerfile: Dockerfile.api
+    image: orgfeed_api
+    environment:
+      - PGPASSWORD
+      - JWT_KEY
+    restart: always
+    network_mode: host
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/postgresql:/var/run/postgresql
+      - /var/lib/org_feed:/var/lib/org_feed
+    command: "gunicorn -b 0.0.0.0:5000 server:app --reload -w 1 --threads 2"
